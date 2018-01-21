@@ -2,6 +2,12 @@
 
 nvl enables to use NeoVim as less command.
 
+## Installation
+
+```bash
+$ go get -u github.com/acomagu/nvl
+```
+
 ## Usage
 
 ```bash
