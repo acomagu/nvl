@@ -22,7 +22,7 @@ $ cat file | nvl
 
 If `NVIM_LISTEN_ADDRESS` environment variable is set, `nvl` use it to view in existing NeoVim instance. If not, starts new NeoVim instance.
 
-## Attributes
+## Features
 
 - **Asynchronous.** Unlike `view` command, it can start showing before the input stream ends.
 - **Fast like less.**
