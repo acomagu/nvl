@@ -26,6 +26,7 @@ If `NVIM_LISTEN_ADDRESS` environment variable is set, `nvl` use it to view in ex
 
 - **Asyncronous.** Unlike `view` command, it can start showing before the input stream ends.
 - **Fast like less.**
+- **less keybindings.** Some keybindings of less can be used.
 
 ## Author
 
