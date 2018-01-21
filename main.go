@@ -47,6 +47,16 @@ func run() int {
 		}
 	}
 
+	file := os.Stdin
+	if len(os.Args) >= 2 {
+		var err error
+		file, err = os.Open(os.Args[1])
+		if err != nil {
+			fmt.Println(err)
+			return 1
+		}
+	}
+
 	nv, err := nvim.Dial(addr)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -84,7 +94,7 @@ echo "Loading..."`)
 
 	for {
 		buf := make([]byte, 512*1024)
-		n, err := os.Stdin.Read(buf)
+		n, err := file.Read(buf)
 		if err == io.EOF {
 			break
 		}
