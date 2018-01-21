@@ -2,13 +2,13 @@ package main
 
 import (
 	"bytes"
-	"time"
-	"os/exec"
-	"path/filepath"
+	"fmt"
 	"io"
 	"io/ioutil"
-	"fmt"
 	"os"
+	"os/exec"
+	"path/filepath"
+	"time"
 
 	"github.com/neovim/go-client/nvim"
 )
@@ -43,7 +43,7 @@ func run() int {
 			if _, err := os.Stat(addr); err == nil {
 				break
 			}
-			time.Sleep(20*time.Millisecond)
+			time.Sleep(20 * time.Millisecond)
 		}
 	}
 
@@ -105,34 +105,34 @@ echo "Loading..."`)
 }
 
 type NvimWriter struct {
-	nv *nvim.Nvim
-	win nvim.Window
-	buf nvim.Buffer
-	iLines int
-	wait chan bool
+	nv           *nvim.Nvim
+	win          nvim.Window
+	buf          nvim.Buffer
+	iLines       int
+	wait         chan bool
 	isFirstWrite bool
 }
 
 func NewNvimWriter(nv *nvim.Nvim, win nvim.Window, buf nvim.Buffer) NvimWriter {
 	return NvimWriter{
-		nv: nv,
-		win: win,
-		buf: buf,
-		iLines: 0,
+		nv:           nv,
+		win:          win,
+		buf:          buf,
+		iLines:       0,
 		isFirstWrite: true,
 	}
 }
 
 func (w *NvimWriter) start() chan [][]byte {
 	in := make(chan [][]byte, 100)
-	w.wait = make(chan bool)  // Create new channel. Not do in go routine.
+	w.wait = make(chan bool) // Create new channel. Not do in go routine.
 
 	go func() {
 		var buf [][]byte
 		writeend := make(chan bool)
 
 		writable := true
-		L:
+	L:
 		for {
 			select {
 			case lines, ok := <-in:
@@ -157,7 +157,7 @@ func (w *NvimWriter) start() chan [][]byte {
 			<-writeend
 		}
 
-		w.write(writeend, buf)  // Left
+		w.write(writeend, buf) // Left
 		w.wait <- <-writeend
 	}()
 
@@ -208,7 +208,7 @@ func (w *NvimWriter) write(end chan<- bool, lines [][]byte) {
 		}
 
 		if tail {
-			w.nv.SetWindowCursor(w.win, [2]int{pos[0]+len(lines), pos[1]})
+			w.nv.SetWindowCursor(w.win, [2]int{pos[0] + len(lines), pos[1]})
 		}
 
 		w.iLines += len(lines)
